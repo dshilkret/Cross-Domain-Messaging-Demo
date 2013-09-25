@@ -1,1 +1,44 @@
-"Hello" 
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>PostMessage Demo</title>
+</head>
+<body>
+	<h1>Controller Window</h1>
+	<p>
+	  This document is on the domain: http://codepen.io
+	</p>
+	<p>
+		<input type="text" placeholder="Type message here" id="text" >
+	  <button id="send">Send Message</button>
+	</p>
+
+	<!-- Calling a page through iframe which has the code for listening to the 'message' event -->
+	<iframe id="receiver" src="iframe.html" width="500" height="200">
+	  <p>Your browser does not support iframes.</p>
+	</iframe>
+
+	<script>
+		window.onload = function() {
+		  // Get the window displayed in the iframe.
+		  var receiver = document.getElementById('receiver').contentWindow;
+
+		  // Get a reference to the 'Send Message' button.
+		  var btn = document.getElementById('send');
+
+		  // A function to handle sending messages.
+		  function sendMessage(e) {
+		    // Prevent any default browser behaviour.
+		    e.preventDefault();
+
+		    // Send a message with the text 'Hello Treehouse!' to the receiver window.
+		    receiver.postMessage(document.getElementById('text').value, 'http://localhost');
+		  }
+
+		  // Add an event listener that will execute the sendMessage() function when the send button is clicked.
+		  btn.addEventListener('click', sendMessage);
+		}
+	</script>
+</body>
+</html>
